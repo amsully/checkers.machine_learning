@@ -27,7 +27,8 @@ public class Main {
 		// Play game when it is not finished (no more red or black pieces).
 		while( ! checkers.gameOver(gameBoard) || tempCounter <= 1 )
 		{
-			
+
+		
 			// Players turn
 			Player playerToMove = checkers.getPlayerToMove();
 			
@@ -38,12 +39,13 @@ public class Main {
 			// Make sure a valid move was entered. 
 			while( gameBoard == updatedGameBoard)
 			{
-				updatedGameBoard = checkers.playMove( playerToMove.chooseMove(gameBoard, scan), gameBoard );
+				gameBoard.printBoard();	
+				
+				updatedGameBoard = checkers.playMove( playerToMove.chooseMove(checkers, gameBoard, scan), gameBoard );
 			}
 			
 			gameBoard = updatedGameBoard;
 			
-			gameBoard.printBoard();
 			
 			tempCounter += 1;
 		}

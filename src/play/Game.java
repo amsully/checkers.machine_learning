@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Arrays;
+
 
 import competitors.Player;
 import game.info.Board;
@@ -46,19 +48,15 @@ public class Game {
 	}
 
 	public Board playMove(Move chosenMove, Board gameBoard) {
-		// TODO Auto-generated method stub
-		
-			
-		// Map of potential moves (end position:list of pieces to remove.)
-		Map<int[], List<int[]>> potentialMoves = getRedMoves(chosenMove, gameBoard);
-		
-		
+
+		Map<int[], List<int[]>> potentialMoves = getAllowedMoves( chosenMove.getStartPosition() , gameBoard);		
 		
 		// If a key is the chosen moves end position, execute that key.
 		for(int[] key: potentialMoves.keySet() )
 		{
-			System.out.println(key);
-			if( key == chosenMove.getEndPosition() )
+			System.out.println( Arrays.toString(key) );
+			
+			if( Arrays.equals( key, chosenMove.getEndPosition() ) )
 			{
 				return executeMove( gameBoard, chosenMove, potentialMoves.get(key));
 			}
@@ -66,6 +64,27 @@ public class Game {
 		System.out.println("Invalid Move! Try Again");
 			
 		return gameBoard;
+	}
+	
+	public Map<int[], List<int[]> > getAllowedMoves( int[] startPiece, Board gameBoard )
+	{
+		// TODO Auto-generated method stub
+		
+		Player playerToMove = getPlayerToMove();
+		Map<int[], List<int[]>> potentialMoves = null;
+			
+		// Map of potential moves (end position:list of pieces to remove.)
+		if( playerToMove == playerRed)
+		{
+			 potentialMoves = getRedMoves(startPiece, gameBoard);			
+		}
+		if( playerToMove == playerBlack)
+		{
+			potentialMoves =  getBlackMoves(startPiece, gameBoard);			
+		}
+		
+		return potentialMoves;
+		
 	}
 
 	private Board executeMove( Board gameBoard, Move chosenMove, List<int[]> list) {
@@ -93,25 +112,23 @@ public class Game {
 		return gameBoard;
 	}
 
-	private Map<int[], List<int[]>> getRedMoves(Move chosenMove, Board gameBoard) {
+	private Map<int[], List<int[]>> getRedMoves(int[] startPiece, Board gameBoard) {
 		// TODO Auto-generated method stub
 		
 		Map<int[], List<int[]>> possibleMoves = new HashMap<int[],List<int[]>>();
 		List<int[]> removeList = new ArrayList<int[]>();
 
 		
-		int[] start = chosenMove.getStartPosition();
+		int[] start = startPiece;
 		
 		Piece[][] boardLayout = gameBoard.getBoardLayout();
 
-		int[] end = { start[0] - 1, start[1] +1}; // Diagonal location of a potential piece.
+		int[] end = { start[0] - 1, start[1] +1}; // Right Diagonal location of a potential piece.
 
 		
 		if( boardLayout[ end[0]][ end[1] ].getColor() == "") 
 		{
-			int[] invalid = {-1,-1};
-			
-			removeList.add(invalid);
+			// Here is where the recurrence will begin to move pieces.
 			
 			possibleMoves.put(end, removeList);
 		}
@@ -119,4 +136,30 @@ public class Game {
 		
 		return possibleMoves;
 	}
+	
+	private Map<int[], List<int[]>> getBlackMoves(int[] startPiece, Board gameBoard) {
+		// TODO Auto-generated method stub
+		
+		Map<int[], List<int[]>> possibleMoves = new HashMap<int[],List<int[]>>();
+		List<int[]> removeList = new ArrayList<int[]>();
+
+		
+		int[] start = startPiece;
+		
+		Piece[][] boardLayout = gameBoard.getBoardLayout();
+
+		int[] end = { start[0] + 1, start[1] -1}; // Diagonal left location of a potential piece.
+
+		
+		if( boardLayout[ end[0]][ end[1] ].getColor() == "") 
+		{
+			// Here is where the recurrence will begin to move pieces.
+			
+			possibleMoves.put(end, removeList);
+		}
+
+		
+		return possibleMoves;
+	}
+
 }
