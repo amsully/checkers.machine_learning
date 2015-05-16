@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Arrays;
 
-
+import competitors.HumanPlayer;
 import competitors.Player;
 import game.info.Board;
 import game.info.Move;
@@ -18,17 +18,40 @@ public class Game {
 	private Player playerBlack;
 	private Player playerRed;
 	
-	public Game(Player player, Player player2)
+	private Board checkersBoard;
+	
+	public Game()
 	{
-		playerBlack = player;
-		playerRed = player2;
+		playerBlack = new HumanPlayer();
+		playerRed = new HumanPlayer();
 		
 		playerToMove = playerBlack; // The first player is BLACK. (Black moves first)
+		
+		checkersBoard = new Board();
 	}
 	
-	public boolean gameOver( Board board )
+	public boolean gameOver()
 	{
-		return true;
+		if( checkersBoard.noPieces("black") )
+		{
+			return true;
+		}
+		else if( checkersBoard.noPieces("red") )
+		{
+			return true;
+		}
+		
+		return false;
+		
+	}
+	
+	public Board move()
+	{
+		//int[] startPosition = scanInt();
+		//int[] endPosition = scanInt();
+		
+		return checkersBoard;
+		
 	}
 	
 	public Player getPlayerToMove()
@@ -160,6 +183,35 @@ public class Game {
 
 		
 		return possibleMoves;
+	}
+
+
+	public Player getPlayerBlack() {
+		return playerBlack;
+	}
+
+	public void setPlayerBlack(Player playerBlack) {
+		this.playerBlack = playerBlack;
+	}
+
+	public Player getPlayerRed() {
+		return playerRed;
+	}
+
+	public void setPlayerRed(Player playerRed) {
+		this.playerRed = playerRed;
+	}
+
+	public Board getCheckersBoard() {
+		return checkersBoard;
+	}
+
+	public void setCheckersBoard(Board checkersBoard) {
+		this.checkersBoard = checkersBoard;
+	}
+
+	public void setPlayerToMove(Player playerToMove) {
+		this.playerToMove = playerToMove;
 	}
 
 }
