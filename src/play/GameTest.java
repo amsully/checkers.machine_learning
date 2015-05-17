@@ -21,13 +21,6 @@ public class GameTest {
 	}
 	
 	@Test
-	public void testMoveReturnsBoard()
-	{
-		Game testGame = new Game();
-		assert( testGame.move().getClass() == new Board().getClass() );
-	}
-	
-	@Test
 	public void testGameMoveAlternations() {
 		
 		Game testGame = new Game();

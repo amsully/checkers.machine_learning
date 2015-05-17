@@ -49,11 +49,16 @@ public class Board {
 
 	public void printBoard() {
 		System.out.println(PrettyPrinter.print(this.getBoardLayout(), new Printer<String>() {
-	        @Override
 	        public String print(String obj) {
 	            return obj;
 	        }
 	    }));
+	}
+
+
+	public boolean noPieces(String string) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

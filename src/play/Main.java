@@ -15,7 +15,7 @@ public class Main {
 		
 		while( ! checkers.gameOver() )
 		{
-			checkers.move()
+			checkers.move();
 		}
 		
 		checkers.winner();

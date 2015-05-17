@@ -12,5 +12,5 @@ public abstract class Player {
 	{
 	}
 	
-	public abstract Move chooseMove( Game checkers, Board gameBoard, Scanner scan );
+	public abstract Move chooseMove( Game checkers, Board gameBoard );
 }
